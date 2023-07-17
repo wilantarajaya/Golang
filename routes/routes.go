@@ -1,23 +1,20 @@
 package routes
 
 import (
-	"os"
 	"prakerja6/controllers"
 
-	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func InitRoute(e *echo.Echo) *echo.Echo{
-	e.Use(middleware.Logger())
-	e.POST("/login", controllers.LoginController)
-	
-	authGroup := e.Group("")
-	authGroup.Use(echojwt.JWT([]byte(os.Getenv("KEY_ENCRYPTOPN"))))
-	authGroup.GET("/users", controllers.UserController)
-	authGroup.GET("/users/:id", controllers.DetailUserController)
-	authGroup.POST("/users", controllers.CreateUserController)
-	
+	route := e.Group("")
+	route.GET("/users", controllers.GetAllUSer)
+	route.GET("/users/:id", controllers.DetailUserController)
+	route.DELETE("/users/:id", controllers.DeleteUser)
+	route.POST("/users", controllers.CreateUserController)
+	route.POST("/books", controllers.CreateBookController)
+	route.GET("/books", controllers.GetAllBook)
+	route.GET("/books/:id", controllers.DetailBookController)
+	route.DELETE("/books/:id", controllers.DeleteBook)
 	return e
 }

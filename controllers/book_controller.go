@@ -10,28 +10,28 @@ import (
 )
 
 
-func CreateUserController(c echo.Context) error {
-	user := models.User{}
-	c.Bind(&user)
+func CreateBookController(c echo.Context) error {
+	book := models.Book{}
+	c.Bind(&book)
 
-	result := config.DB.Create(&user)
+	result := config.DB.Create(&book)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, models.BaseResponse{
 			Message: "Gagal memasukkan data", Status: false, Data: nil,
 		})
 	}
 	return c.JSON(http.StatusCreated, models.BaseResponse{
-		Message: "Success memasukkan data", Status: true, Data: user,
+		Message: "Success memasukkan data", Status: true, Data: book,
 	})
 }
 
-func DetailUserController(c echo.Context) error {
-	var users []models.User 
+func DetailBookController(c echo.Context) error {
+	var books []models.Book
 
 
 	var id, _ = strconv.Atoi(c.Param("id"))
 
-	result := config.DB.First(&users, id)
+	result := config.DB.First(&books, id)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, models.BaseResponse{
 			Message: "Gagal mendapatkan data", Status: false, Data: nil,
@@ -39,14 +39,14 @@ func DetailUserController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, models.BaseResponse{
-		Message: "Success mendapatkan data", Status: true, Data: users,
+		Message: "Success mendapatkan data", Status: true, Data: books,
 	})
 }
 
-func GetAllUSer(c echo.Context) error {
-	var users []models.User 
+func GetAllBook(c echo.Context) error {
+	var books []models.Book
 	
-	result := config.DB.Find(&users)
+	result := config.DB.Find(&books)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, models.BaseResponse{
 			Message: "Gagal mendapatkan data", Status: false, Data: nil,
@@ -54,15 +54,15 @@ func GetAllUSer(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, models.BaseResponse{
-		Message: "Success mendapatkan data", Status: true, Data: users,
+		Message: "Success mendapatkan data", Status: true, Data: books,
 	})
 }
 
-func DeleteUser(c echo.Context) error {
-	var users []models.User 
+func DeleteBook(c echo.Context) error {
+	var books []models.Book
 	var id, _ = strconv.Atoi(c.Param("id"))
 
-	result := config.DB.Delete(&users, id)
+	result := config.DB.Delete(&books, id)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, models.BaseResponse{
 			Message: "Gagal Menghapus Data", Status: false, Data: nil,
@@ -70,8 +70,9 @@ func DeleteUser(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, models.BaseResponse{
-		Message: "Success Menghapus data", Status: true, Data: users,
+		Message: "Success Menghapus data", Status: true, Data: books,
 	})
 }
+
 
 
